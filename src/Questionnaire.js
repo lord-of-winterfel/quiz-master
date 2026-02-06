@@ -7,14 +7,18 @@ import StartScreen from "./StartScreen";
 import Question from "./Question";
 import NextButton from "./components/NextButton";
 import Progress from "./components/Progress";
-import db from "./db";
 import FinishedScreen from "./components/FinishedScreen";
 import Footer from "./components/Footer";
 import Timer from "./components/Timer";
-const { questionsArray } = db;
 
 
-function App() {
+const  Questionnaire = ({
+  questionsArray,
+  topic,
+  dispatchHome,
+  iconUrl
+}) => {
+  console.log("questionsArray--", questionsArray);
   const timePerQuestion = 30;
   const initialState = {
     questions: [],
@@ -31,6 +35,7 @@ function App() {
   function reducer(state, action) {
     switch (action.type) {
       case "dataReceived":
+        console.log("data received", action.payload);
         return {
           ...state,
           questions: action.payload,
@@ -84,6 +89,7 @@ function App() {
           questions: state.questions,
           highscore: state.highscore,
           attempts: state.attempts,
+          timeRemaining: state.questions.length * timePerQuestion,
           status: 'ready',
 
         }
@@ -107,14 +113,14 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
+      <Header topic={topic} iconUrl={iconUrl}/>
       <Main>
         {status === "loading" &&
           <Loader />}
         {status === "error" &&
           <Error />}
         {status === "ready" &&
-          <StartScreen numQuestions={numQuestions} dispatch={dispatch} timeRemaining={timeRemaining} />}
+          <StartScreen numQuestions={numQuestions} dispatch={dispatch} timeRemaining={timeRemaining} topic={topic} dispatchHome={dispatchHome} />}
         {status === "active" &&(
           <>
             <Progress index={index} numQuestions={numQuestions} points={points} maxPoints={maxPoints} answer={answer} />
@@ -134,4 +140,4 @@ function App() {
   );
 }
 
-export default App;
+export default Questionnaire;
