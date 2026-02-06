@@ -109,7 +109,7 @@ const  Questionnaire = ({
       type: "dataReceived",
       payload: questionsArray
     })
-  }, []);
+  }, [questionsArray]);
 
   return (
     <div className="app">

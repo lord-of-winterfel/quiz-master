@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer } from "react";
 import db from "./db-v2";
 import Questionnaire from "./Questionnaire";
 import Card from "./components/Card";
@@ -28,6 +28,8 @@ function App() {
           topic:null,
           topicIndex:null
         }
+      default: 
+       return state
     }
   }
   const [state, dispatchHome] = useReducer(reducer, initialState);
